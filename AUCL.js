@@ -1,34 +1,47 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Create a form element
-    const form = document.createElement("form");
-    form.setAttribute("id", "loginForm");
-    form.setAttribute("style", "width: 300px; margin: 20px auto; text-align: center; font-family: Arial, sans-serif;");
+import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
 
-    // Create an email input field
-    const emailInput = document.createElement("input");
-    emailInput.setAttribute("type", "email");
-    emailInput.setAttribute("id", "email");
-    emailInput.setAttribute("name", "email");
-    emailInput.setAttribute("placeholder", "Enter your email");
-    emailInput.setAttribute("required", true);
-    emailInput.setAttribute("style", "width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 5px;");
+const Login = () => {
+  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
 
-    // Create a submit button
-    const submitButton = document.createElement("button");
-    submitButton.setAttribute("type", "submit");
-    submitButton.textContent = "Login";
-    submitButton.setAttribute("style", "width: 100%; padding: 10px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;");
-    
-    // Append elements to form
-    form.appendChild(emailInput);
-    form.appendChild(submitButton);
+  return (
+    <div style={{ textAlign: "center", padding: "50px" }}>
+      <h2>Custom Auth0 Login</h2>
 
-    // Append form to body
-    document.body.appendChild(form);
+      {!isAuthenticated ? (
+        <>
+          <p>Click below to log in:</p>
+          <button onClick={() => loginWithRedirect()} style={buttonStyle}>
+            Log In
+          </button>
+        </>
+      ) : (
+        <>
+          <h3>Welcome, {user.name}!</h3>
+          <img src={user.picture} alt="Profile" width="100" style={{ borderRadius: "50%" }} />
+          <p>Email: {user.email}</p>
+          <button onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })} style={logoutButton}>
+            Log Out
+          </button>
+        </>
+      )}
+    </div>
+  );
+};
 
-    // Handle form submission
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        alert("Email entered: " + emailInput.value);
-    });
-});
+const buttonStyle = {
+  padding: "10px 20px",
+  border: "none",
+  backgroundColor: "#007bff",
+  color: "white",
+  fontSize: "16px",
+  cursor: "pointer",
+  borderRadius: "5px",
+};
+
+const logoutButton = {
+  ...buttonStyle,
+  backgroundColor: "red",
+};
+
+export default Login;
