@@ -1,7 +1,6 @@
-import * as ScreenProvider from 'https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js';
-
 console.log("Starting 1"); 
 document.addEventListener("DOMContentLoaded", function () {
+    import * as ScreenProvider from 'https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js';
     console.log("Starting 2");
     console.log();
     document.body.innerHTML = `
