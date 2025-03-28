@@ -1,3 +1,3 @@
 document.addEventListener("DOMContentLoaded", function () {
-    document.getElementById("body").innerHTML = "Hello world";
+    document.body.innerHTML = "Hello, World!";
 });
