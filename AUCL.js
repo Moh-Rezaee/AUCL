@@ -17,3 +17,14 @@ document.addEventListener("DOMContentLoaded", function () {
   </div>
 `
 });
+
+// Add event listener to handle form submission
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the form from submitting the traditional way
+
+  const email = document.getElementById('email').value;
+  console.log("Email is: "+email);
+  const screenProvider = new ScreenProvider();
+
+  screenProvider.login({ username: email });
+});
